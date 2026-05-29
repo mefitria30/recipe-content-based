@@ -1,7 +1,8 @@
 const CACHE_NAME = "resep-cache-v1";
 const urlsToCache = [
     "/",
-    "/result.html",
+    "/index.html",
+    "/about.html",
     "/offline.html",
     "/static/manifest.json",
     "/static/icons/icon-192.png",
