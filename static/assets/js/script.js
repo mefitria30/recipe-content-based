@@ -7,20 +7,54 @@ function cariResep ()
         {
             const hasilDiv = document.getElementById( "hasil" );
             hasilDiv.innerHTML = "";
+
+            if ( !Array.isArray( data ) || data.length === 0 )
+            {
+                // render card fallback
+                hasilDiv.innerHTML = `
+          <div class="menu-category">
+            <h3>Resep tidak ditemukan</h3>
+            <div class="menu-row"><span class="dish-name">Info</span><span class="dish-price">Resep "${ nama }" tidak ada di database</span></div>
+          </div>
+        `;
+                // redirect ke halaman depan setelah 2 detik
+                setTimeout( () =>
+                {
+                    window.location.href = "/";
+                }, 2000 );
+                return;
+            }
+
+            // render hasil normal
             data.forEach( item =>
             {
                 const kategori = Array.isArray( item.kategori ) ? item.kategori.join( ", " ) : item.kategori;
                 hasilDiv.innerHTML += `
-                    <div class="menu-category">
-                        <h3>${ item.judul }</h3>
-                        <div class="menu-row"><span class="dish-name">Kategori</span><span class="dish-price">${ kategori }</span></div>
-                        <div class="menu-row"><span class="dish-name">Waktu</span><span class="dish-price">${ item.waktu ? item.waktu + " menit" : "-" }</span></div>
-                        <div class="menu-row"><span class="dish-name">Similarity</span><span class="dish-price">${ item.skor }</span></div>
-                    </div>
-                `;
+          <div class="menu-category">
+            <h3>${ item.judul }</h3>
+            <div class="menu-row"><span class="dish-name">Kategori</span><span class="dish-price">${ kategori }</span></div>
+            <div class="menu-row"><span class="dish-name">Waktu</span><span class="dish-price">${ item.waktu ? item.waktu + " menit" : "-" }</span></div>
+            <div class="menu-row"><span class="dish-name">Similarity</span><span class="dish-price">${ item.skor }</span></div>
+          </div>
+        `;
             } );
+        } )
+        .catch( err =>
+        {
+            console.error( "Fetch error:", err );
+            hasilDiv.innerHTML = `
+        <div class="menu-category">
+          <h3>Error</h3>
+          <div class="menu-row"><span class="dish-name">Info</span><span class="dish-price">Terjadi error saat ambil data</span></div>
+        </div>
+      `;
+            setTimeout( () =>
+            {
+                window.location.href = "/";
+            }, 2000 );
         } );
 }
+
 
 function goBack ()
 {
