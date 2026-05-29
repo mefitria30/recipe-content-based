@@ -33,7 +33,7 @@ def update_pipeline(csv_path="resep_dataset_clean.csv"):
     ]
 
     # Generate embedding
-    model = SentenceTransformer('all-MiniLM-L3-v2')
+    model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
     X_resep = model.encode(texts)
 
     # Export ulang (dataset + embedding)
@@ -49,7 +49,7 @@ with open("resep_embeddings.pkl", "rb") as f:
     X_resep = pickle.load(f)
 
 # Model di-load ulang
-model = SentenceTransformer('all-MiniLM-L3-v2')
+model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
 
 # === Fungsi rekomendasi (tanpa hard-code) ===
 def rekomendasi_resep_embed(nama_resep, top_n=12, cat_boost=0.1, threshold=0.5):
