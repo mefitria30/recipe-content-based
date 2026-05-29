@@ -108,7 +108,7 @@ async function cariResep ()
         // OFFLINE → pakai JSON lokal + logika mirip app.py
         try
         {
-            const res = await fetch( "/static/data/resep_dataset_clean.json" );
+            const res = await fetch( "/static/resep_dataset_clean.json" );
             const data = await res.json();
 
             const idx = data.findIndex( r => r.nama_resep.toLowerCase() === nama.toLowerCase() );
