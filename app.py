@@ -55,7 +55,7 @@ model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
 
 # === Fungsi rekomendasi (tanpa hard-code) ===
 def rekomendasi_resep_embed(nama_resep, top_n=12, cat_boost=0.1, threshold=0.5):
-    idx_list = df_clean.index[df_clean['nama_resep'] == nama_resep].tolist()
+    idx_list = df_clean.index[df_clean['nama_resep'].str.lower() == nama_resep.lower()].tolist()
     if not idx_list:
         return []
     idx = idx_list[0]
