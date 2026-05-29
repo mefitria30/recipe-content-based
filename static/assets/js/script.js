@@ -22,6 +22,7 @@
         } );
 }*/
 
+/*
 function cariResep ()
 {
     const nama = document.getElementById( "namaResep" ).value;
@@ -50,6 +51,30 @@ function cariResep ()
             document.getElementById( "hasil" ).innerText = "Terjadi error saat ambil data.";
         } );
 }
+*/
+
+function cariResep ()
+{
+    const nama = document.getElementById( "namaResep" ).value;
+    fetch( `https://recipe-content-based.onrender.com/recommend?nama_resep=${ encodeURIComponent( nama ) }&top_n=12` )
+        .then( res => res.json() )
+        .then( data =>
+        {
+            // tampilkan semua hasil dalam alert
+            let pesan = "";
+            data.forEach( item =>
+            {
+                const kategori = Array.isArray( item.kategori ) ? item.kategori.join( ", " ) : item.kategori;
+                pesan += `Judul: ${ item.judul }\nKategori: ${ kategori }\nWaktu: ${ item.waktu ? item.waktu + " menit" : "-" }\nSimilarity: ${ item.skor }\n\n`;
+            } );
+            alert( pesan );
+        } )
+        .catch( err =>
+        {
+            alert( "Terjadi error: " + err );
+        } );
+}
+
 
 function goBack ()
 {
