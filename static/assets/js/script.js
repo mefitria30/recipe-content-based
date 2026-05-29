@@ -1,7 +1,7 @@
 function cariResep ()
 {
     const nama = document.getElementById( "namaResep" ).value;
-    fetch( `http://127.0.0.1:5000/recommend?nama_resep=${ encodeURIComponent( nama ) }&top_n=12` )
+    fetch( `https://recipe-content-based.onrender.com/recommend?nama_resep=${ encodeURIComponent( nama ) }&top_n=12` )
         .then( res => res.json() )
         .then( data =>
         {
@@ -31,7 +31,7 @@ function goBack ()
 
 function updateDataset ()
 {
-    fetch( "http://127.0.0.1:5000/update", {
+    fetch( "https://recipe-content-based.onrender.com/update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify( { csv_path: "resep_dataset_clean.csv" } )
