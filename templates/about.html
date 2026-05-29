@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About Spice Haven — Our story, our team, and how to reach us.">
+  <title>About — Spice Haven</title>
+
+  <link rel="manifest" href="/static/manifest.json">
+  <meta name="theme-color" content="#0d6efd">
+
+  <script>
+    if ( "serviceWorker" in navigator )
+    {
+      navigator.serviceWorker.register( "/service-worker.js" )
+        .then( reg => console.log( "Service Worker registered:", reg ) )
+        .catch( err => console.log( "Service Worker failed:", err ) );
+    }
+  </script>
+
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 97'%3E%3Cpath fill='%23999c68' d='M92 75c0-12.15 9.85-22 22-22h22v22c0 12.15-9.85 22-22 22H92V75Z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css' ) }}">
+
+</head>
+
+<body>
+
+  <nav class="topnav" id="myTopnav">
+    <div class="nav-top-row">
+      <div class="logo">SPICE HAVEN</div>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">&#9776;</button>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="{{ url_for('home') }}">HOME</a>
+      <a href="{{ url_for('about') }}" class="active">ABOUT</a>
+    </div>
+  </nav>
+
+  <div class="abt-cont-box" id="heroSection">
+
+    <section class="about-box">
+      <div class="text-name">
+        ABOUT
+        <div class="footer-logo">
+          <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 180 97" xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true">
+            <path fill="#000" d="M92 75c0-12.15 9.85-22 22-22h22v22c0 12.15-9.85 22-22 22H92V75Z" />
+            <path fill="#000" d="M136 31c0-12.15 9.85-22 22-22h22v22c0 12.15-9.85 22-22 22h-22V31Z" />
+            <path fill="#000" d="M88 75c0-12.15-9.85-22-22-22H44v22c0 12.15 9.85 22 22 22h22V75Z" />
+            <path fill="#000" d="M44 31c0-12.15-9.85-22-22-22H0v22c0 12.15 9.85 22 22 22h22V31Z" />
+            <path fill="#000"
+              d="M74.556 46.67c-8.591-8.592-8.591-22.522 0-31.113L90.113 0l15.556 15.556c8.592 8.591 8.592 22.521 0 31.113L90.113 62.226 74.556 46.67Z" />
+          </svg>
+        </div>
+      </div>
+      <div class="text-pra">
+        <p>
+          Aplikasi ini dibuat dengan tujuan pengembangan ilmu pengetahuan di bidang
+          <em>machine learning</em> dan <em>Progressive Web App (PWA)</em>.
+        </p>
+        <p>
+          Sebagai pengembang, saya mengucapkan terima kasih kepada penyedia template
+          <a href="https://themewagon.com/themes/spicehaven/" target="_blank">SpiceHaven</a>
+          yang telah menghadirkan desain halaman web indah dan membantu mempercepat proses pengembangan aplikasi ini.
+        </p>
+        <p>
+          Fokus utama saya adalah membangun sistem rekomendasi yang akurat dari sisi <em>data science</em>,
+          sekaligus menghadirkan pengalaman pengguna yang maksimal melalui fitur <em>progressive web apps</em>.
+          Seluruh pengembangan ini merupakan bagian dari <strong>tugas akhir jenjang S1</strong> di perguruan tinggi.
+        </p>
+      </div>
+    </section>
+
+    <section class="contact-box" id="contact">
+      <div class="text-box">CONTACT</div>
+
+      <div class="text-content2">
+        FITRIA MELLIYANNI<br>
+        <p>fitria.melliyanni@gmail.com</p><br>
+        <a href="https://www.instagram.com/mefitria30/" target="_blank" rel="noopener noreferrer">INSTAGRAM</a><br>
+        <a href="https://www.linkedin.com/in/fitria-melliyanni/" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
+      </div>
+
+      <div class="text-content">
+        <button class="book-btn" onclick="updateDataset()" id="updateBtn">UPDATE APP</button>
+      </div>
+
+    </section>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-logo">
+      <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 180 97" xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true">
+        <path fill="#000" d="M92 75c0-12.15 9.85-22 22-22h22v22c0 12.15-9.85 22-22 22H92V75Z" />
+        <path fill="#000" d="M136 31c0-12.15 9.85-22 22-22h22v22c0 12.15-9.85 22-22 22h-22V31Z" />
+        <path fill="#000" d="M88 75c0-12.15-9.85-22-22-22H44v22c0 12.15 9.85 22 22 22h22V75Z" />
+        <path fill="#000" d="M44 31c0-12.15-9.85-22-22-22H0v22c0 12.15 9.85 22 22 22h22V31Z" />
+        <path fill="#000"
+          d="M74.556 46.67c-8.591-8.592-8.591-22.522 0-31.113L90.113 0l15.556 15.556c8.592 8.591 8.592 22.521 0 31.113L90.113 62.226 74.556 46.67Z" />
+      </svg>
+    </div>
+    <div class="footer-box">
+      <div class="footer-box1">
+        <p>RECIPE<br>&amp; RECOMMENDATION APP</p>
+        <b>SPICE HAVEN</b>
+      </div>
+      <div class="footer-box2">
+        A: Banten, Indonesia<br>
+        T: 0812-8461-8144<br>
+        E: fitria.melliyanni@gmail.com<br><br>
+      </div>
+      <div class="footer-box3">
+        <a href="{{ url_for('home') }}">HOME</a>
+        <a href="{{ url_for('about') }}">ABOUT</a>
+        <a href="https://www.instagram.com/mefitria30/" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
+        <a href="https://www.linkedin.com/in/fitria-melliyanni/" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
+      </div>
+    </div>
+    <p>
+      &copy; <span id="year"></span> by Fitria Melliyanni. All rights reserved. <br>
+      Developed by <a style="font-weight: bold;" href="https://github.com/mefitria30" target="_blank">mefitria30</a> •
+      Distributed by <a style="font-weight: bold;" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+    </p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/script.js') }}"></script>
+
+  <script>
+    // Script untuk bikin tahun otomatis sesuai tahun sekarang
+    document.getElementById( "year" ).textContent = new Date().getFullYear();
+  </script>
+
+</body>
+
+</html>
