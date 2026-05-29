@@ -21,7 +21,7 @@ function cariResep ()
                 setTimeout( () =>
                 {
                     window.location.href = "/";
-                }, 2000 );
+                }, 10000 );
                 return;
             }
 
@@ -51,7 +51,7 @@ function cariResep ()
             setTimeout( () =>
             {
                 window.location.href = "/";
-            }, 2000 );
+            }, 10000 );
         } );
 }
 

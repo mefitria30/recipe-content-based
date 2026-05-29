@@ -89,7 +89,8 @@
     <div class="booking-controls">
         <div class="booking-field">
             <label for="namaResep">Masukkan Nama Resep</label>
-            <input id="namaResep" type="text" placeholder="Contoh: ayam goreng, sup tahu kimchi">
+            <input id="namaResep" type="text" list="resepList" placeholder="Contoh: ayam goreng, sup tahu kimchi">
+            <datalist id="resepList"></datalist>
         </div>
     </div>
     <button class="book-btn" onclick="cariResep()">SEARCH RECIPE</button>
@@ -148,6 +149,28 @@
         // Script untuk bikin tahun otomatis sesuai tahun sekarang
         document.getElementById( "year" ).textContent = new Date().getFullYear();
     </script>
+
+    <script>
+        async function loadAutocomplete ()
+        {
+            try
+            {
+                const res = await fetch( "https://recipe-content-based.onrender.com/recipes" );
+                const names = await res.json();
+                const datalist = document.getElementById( "resepList" );
+                datalist.innerHTML = "";
+                names.forEach( n =>
+                {
+                    datalist.innerHTML += `<option value="${ n }">`;
+                } );
+            } catch ( err )
+            {
+                console.error( "Gagal load daftar resep:", err );
+            }
+        }
+        window.onload = loadAutocomplete;
+    </script>
+
 
 </body>
 

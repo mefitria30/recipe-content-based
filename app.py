@@ -113,6 +113,12 @@ def update():
 def sw():
     return app.send_static_file("service-worker.js")
 
+# === Endpoint untuk daftar nama resep (autocomplete) ===
+@app.route("/recipes", methods=["GET"])
+def recipes():
+    # ambil semua nama_resep dari df_clean
+    names = df_clean['nama_resep'].dropna().tolist()
+    return jsonify(names)
 
 if __name__ == "__main__":
     app.run(debug=True)
