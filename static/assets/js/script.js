@@ -1,4 +1,4 @@
-function cariResep ()
+/*function cariResep ()
 {
     const nama = document.getElementById( "namaResep" ).value;
     fetch( `https://recipe-content-based.onrender.com/recommend?nama_resep=${ encodeURIComponent( nama ) }&top_n=12` )
@@ -19,6 +19,35 @@ function cariResep ()
                     </div>
                 `;
             } );
+        } );
+}*/
+
+function cariResep ()
+{
+    const nama = document.getElementById( "namaResep" ).value;
+    fetch( `https://recipe-content-based.onrender.com/recommend?nama_resep=${ encodeURIComponent( nama ) }&top_n=12` )
+        .then( res => res.json() )
+        .then( data =>
+        {
+            const hasilDiv = document.getElementById( "hasil" );
+            hasilDiv.innerHTML = "";
+            data.forEach( item =>
+            {
+                const kategori = Array.isArray( item.kategori ) ? item.kategori.join( ", " ) : item.kategori;
+                hasilDiv.innerHTML += `
+          <p>
+            Judul: ${ item.judul }<br>
+            Kategori: ${ kategori }<br>
+            Waktu: ${ item.waktu ? item.waktu + " menit" : "-" }<br>
+            Similarity: ${ item.skor }
+          </p>
+        `;
+            } );
+        } )
+        .catch( err =>
+        {
+            console.error( "Fetch error:", err );
+            document.getElementById( "hasil" ).innerText = "Terjadi error saat ambil data.";
         } );
 }
 
