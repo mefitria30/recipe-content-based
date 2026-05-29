@@ -120,5 +120,10 @@ def recipes():
     names = df_clean['nama_resep'].dropna().tolist()
     return jsonify(names)
 
+@app.route("/offline.html")
+def offline():
+    return render_template("offline.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)

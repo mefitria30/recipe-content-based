@@ -8,7 +8,16 @@
     <title>Offline — Recipe App</title>
 
     <link rel="manifest" href="/static/manifest.json">
-    <meta name="theme-color" content="#999c68">
+    <meta name="theme-color" content="#0d6efd">
+
+    <script>
+        if ( "serviceWorker" in navigator )
+        {
+            navigator.serviceWorker.register( "/service-worker.js" )
+                .then( reg => console.log( "Service Worker registered:", reg ) )
+                .catch( err => console.log( "Service Worker failed:", err ) );
+        }
+    </script>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
 </head>
