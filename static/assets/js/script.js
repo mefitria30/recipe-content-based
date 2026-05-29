@@ -9,16 +9,15 @@ function cariResep ()
             hasilDiv.innerHTML = "";
             data.forEach( item =>
             {
+                const kategori = Array.isArray( item.kategori ) ? item.kategori.join( ", " ) : item.kategori;
                 hasilDiv.innerHTML += `
-           <div class="menu-category">
-                <h3>${ item.judul }</h3>
-                <div class="menu-row"><span class="dish-name">Kategori</span><span class="dish-price">${ item.kategori.join( ", " ) }</span>
-                </div>
-                <div class="menu-row"><span class="dish-name">Waktu</span><span class="dish-price">${ item.waktu } menit</span></div>
-                <div class="menu-row"><span class="dish-name">Similarity</span><span class="dish-price">${ item.skor }</span></div>
-                </div>
-            </div>
-        `;
+                    <div class="menu-category">
+                        <h3>${ item.judul }</h3>
+                        <div class="menu-row"><span class="dish-name">Kategori</span><span class="dish-price">${ kategori }</span></div>
+                        <div class="menu-row"><span class="dish-name">Waktu</span><span class="dish-price">${ item.waktu ? item.waktu + " menit" : "-" }</span></div>
+                        <div class="menu-row"><span class="dish-name">Similarity</span><span class="dish-price">${ item.skor }</span></div>
+                    </div>
+                `;
             } );
         } );
 }
