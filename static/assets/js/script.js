@@ -105,27 +105,44 @@ async function cariResep ()
             } );
     } else
     {
-        // OFFLINE → pakai JSON lokal + logika mirip app.py
+        // OFFLINE → pakai JSON lokal + embeddings
         try
         {
-            const res = await fetch( "/static/resep_dataset_clean.json" );
-            const data = await res.json();
+            const [ resData, resEmb ] = await Promise.all( [
+                fetch( "/static/resep_dataset_clean.json" ),
+                fetch( "/static/resep_embeddings.json" )
+            ] );
+            const data = await resData.json();
+            const embeddings = await resEmb.json();
 
             const idx = data.findIndex( r => r.nama_resep.toLowerCase() === nama.toLowerCase() );
             if ( idx === -1 )
             {
                 hasilDiv.innerHTML = `
-          <div class="menu-category">
-            <h3>Resep tidak ditemukan</h3>
-            <div class="menu-row"><span class="dish-name">Info</span>
-            <span class="dish-price">Resep "${ nama }" tidak ada di database offline</span></div>
-          </div>`;
+        <div class="menu-category">
+          <h3>Resep tidak ditemukan</h3>
+          <div class="menu-row"><span class="dish-name">Info</span>
+          <span class="dish-price">Resep "${ nama }" tidak ada di database offline</span></div>
+        </div>`;
                 return;
             }
 
             const query = data[ idx ];
+            const queryVec = embeddings[ idx ];
             const queryCat = query.kategori_norm ? eval( query.kategori_norm ) : [];
             const queryBahan = query.list_bahan_norm ? eval( query.list_bahan_norm ) : [];
+
+            function cosineSimilarity ( vecA, vecB )
+            {
+                let dot = 0, normA = 0, normB = 0;
+                for ( let i = 0; i < vecA.length; i++ )
+                {
+                    dot += vecA[ i ] * vecB[ i ];
+                    normA += vecA[ i ] * vecA[ i ];
+                    normB += vecB[ i ] * vecB[ i ];
+                }
+                return dot / ( Math.sqrt( normA ) * Math.sqrt( normB ) );
+            }
 
             function jaccard ( list1, list2 )
             {
@@ -133,45 +150,35 @@ async function cariResep ()
                 return s1.size && s2.size ? [ ...s1 ].filter( x => s2.has( x ) ).length / new Set( [ ...s1, ...s2 ] ).size : 0;
             }
 
-            const hasil = data
-                .map( r =>
-                {
-                    if ( r.nama_resep.toLowerCase() === nama.toLowerCase() ) return null;
-                    const cat = r.kategori_norm ? eval( r.kategori_norm ) : [];
-                    const bahan = r.list_bahan_norm ? eval( r.list_bahan_norm ) : [];
-                    let skor = 0;
-                    if ( queryCat.some( c => cat.includes( c ) ) ) skor += 0.1;
-                    skor += 0.2 * jaccard( queryBahan, bahan );
-                    return {
-                        judul: r.nama_resep,
-                        kategori: cat,
-                        waktu: r.waktu_norm,
-                        skor: skor
-                    };
-                } )
+            const hasil = data.map( ( r, i ) =>
+            {
+                if ( i === idx ) return null;
+                const cat = r.kategori_norm ? eval( r.kategori_norm ) : [];
+                const bahan = r.list_bahan_norm ? eval( r.list_bahan_norm ) : [];
+                let skor = cosineSimilarity( queryVec, embeddings[ i ] );
+                if ( queryCat.some( c => cat.includes( c ) ) ) skor += 0.1;
+                skor += 0.2 * jaccard( queryBahan, bahan );
+                return {
+                    judul: r.nama_resep,
+                    kategori: cat,
+                    waktu: r.waktu_norm,
+                    skor: skor
+                };
+            } )
                 .filter( Boolean )
                 .sort( ( a, b ) => b.skor - a.skor )
                 .slice( 0, 12 );
-
-            if ( hasil.length === 0 )
-            {
-                hasilDiv.innerHTML = `
-          <div class="menu-category">
-            <h3>Resep tidak ditemukan</h3>
-          </div>`;
-                return;
-            }
 
             hasil.forEach( item =>
             {
                 const kategori = Array.isArray( item.kategori ) ? item.kategori.join( ", " ) : item.kategori;
                 hasilDiv.innerHTML += `
-          <div class="menu-category">
-            <h3>${ item.judul }</h3>
-            <div class="menu-row"><span class="dish-name">Kategori</span><span class="dish-price">${ kategori }</span></div>
-            <div class="menu-row"><span class="dish-name">Waktu</span><span class="dish-price">${ item.waktu ? item.waktu + " menit" : "-" }</span></div>
-            <div class="menu-row"><span class="dish-name">Similarity</span><span class="dish-price">${ item.skor.toFixed( 3 ) }</span></div>
-          </div>`;
+        <div class="menu-category">
+          <h3>${ item.judul }</h3>
+          <div class="menu-row"><span class="dish-name">Kategori</span><span class="dish-price">${ kategori }</span></div>
+          <div class="menu-row"><span class="dish-name">Waktu</span><span class="dish-price">${ item.waktu ? item.waktu + " menit" : "-" }</span></div>
+          <div class="menu-row"><span class="dish-name">Similarity</span><span class="dish-price">${ item.skor.toFixed( 3 ) }</span></div>
+        </div>`;
             } );
         } catch ( err )
         {
@@ -179,8 +186,6 @@ async function cariResep ()
         }
     }
 }
-
-
 
 function goBack ()
 {

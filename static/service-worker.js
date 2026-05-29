@@ -5,6 +5,7 @@ const urlsToCache = [
     "/about.html",
     "/offline.html",
     "/static/resep_dataset_clean.json",
+    "/static/resep_embeddings.json",
     "/static/manifest.json",
     "/static/icons/icon-192.png",
     "/static/icons/icon-512.png",
