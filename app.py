@@ -4,8 +4,10 @@ import pickle
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from sentence_transformers import SentenceTransformer
+from flask_cors import CORS   # <── tambahin ini
 
 app = Flask(__name__)
+CORS(app)  # <── dan ini langsung setelah app dibuat
 
 @app.route("/")
 def home():
