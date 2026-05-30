@@ -33,6 +33,10 @@ body {
     background-color: var(--bg);
     color: var(--black);
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
 }
 
 img {
@@ -696,7 +700,9 @@ a {
    ============================================ */
 .footer {
     background-color: var(--footer-bg);
-    padding: 36px 28px 22px;
+    padding: 20px 14px;
+    margin-top: auto;
+    text-align: center;
 }
 
 .footer-logo svg {
@@ -770,9 +776,14 @@ a {
 }
 
 @media (max-width: 480px) {
+    .footer {
+        padding: 16px 12px;
+    }
+
     .footer-box {
         flex-direction: column;
-        gap: 26px;
+        gap: 20px;
+        align-items: center;
     }
 
     .footer-box3 {
