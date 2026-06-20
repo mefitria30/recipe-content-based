@@ -98,7 +98,8 @@ def rekomendasi_resep_embed(nama_resep, top_n=12, cat_boost=0.1, threshold=0.5):
             "waktu": int(df_clean.iloc[i]['waktu_norm']) if pd.notnull(df_clean.iloc[i]['waktu_norm']) else None,
             "skor": round(float(sim_scores[i]), 3),
             "is_query": 1 if i == idx else 0,   # tandai apakah ini resep yang dicari
-            "gambar": str(df_clean.iloc[i]['gambar'])
+            "gambar": str(df_clean.iloc[i]['gambar']),
+            "id_resep": str(df_clean.iloc[i]['id_resep'])
         })
     return results
 
@@ -132,6 +133,35 @@ def recipes():
 @app.route("/offline.html")
 def offline():
     return render_template("offline.html")
+
+
+@app.route("/detail/<id_resep>")
+def detail(id_resep):
+    row = df_clean[df_clean['id_resep'] == id_resep]
+    if row.empty:
+        return render_template("detail.html",
+                               judul="Resep tidak ditemukan",
+                               kategori=[],
+                               waktu=None,
+                               bahan=[],
+                               step_masak=[],
+                               gambar=None)
+
+    r = row.iloc[0]
+    kategori = ast.literal_eval(r['kategori_norm']) if isinstance(r['kategori_norm'], str) else r['kategori_norm']
+    bahan_raw = ast.literal_eval(r['list_bahan_norm']) if isinstance(r['list_bahan_norm'], str) else r['list_bahan_norm']
+    bahan = list(dict.fromkeys(bahan_raw))  # hilangin duplikat, tetap jaga urutan
+
+    # split step_masak string jadi list
+    langkah = r['step_masak'].split(";") if isinstance(r['step_masak'], str) else []
+
+    return render_template("detail.html",
+                           judul=r['nama_resep'],
+                           kategori=kategori,
+                           waktu=r['waktu_norm'],
+                           bahan=bahan,
+                           step_masak=langkah,
+                           gambar=r['gambar'])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ judul }} — Spice Haven</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+</head>
+
+<body>
+
+  <nav class="topnav">
+    <div class="nav-top-row">
+      <div class="logo">SPICE HAVEN</div>
+      <button class="nav-hamburger">&#9776;</button>
+    </div>
+    <div class="nav-links">
+      <a href="{{ url_for('home') }}">HOME</a>
+      <a href="{{ url_for('about') }}">ABOUT</a>
+    </div>
+  </nav>
+
+  <div class="abt-cont-box" id="heroSection">
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    <section class="about">
+      <div class="big-text">
+        <h4>{{ judul }}</h4>
+      </div>
+      <div class="small-text">
+        <div class="booking-controls">
+          <div class="booking-field">
+            <label>Kategori</label>
+            <input type="text" value="{{ ', '.join(kategori) }}" readonly>
+          </div>
+          <div class="booking-field">
+            <label>Waktu Masak</label>
+            <input type="text" value="{{ waktu }} menit" readonly>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gambar + daftar bahan -->
+    <div class="image-box">
+      <div class="img1">
+        <img src="{{ gambar }}" alt="{{ judul }}">
+      </div>
+      <div class="img2">
+        <hr class="booking-divider">
+        <div class="time-slot-label">Daftar bahan:</div>
+        <div class="time-grid">
+          {% for b in bahan|unique %}
+          <div class="time-slot">{{ b }}</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Step masak -->
+    <div class="image-box">
+      <div class="img1">
+        <hr class="booking-divider">
+
+        <div class="menu-category">
+          {% if step_masak %}
+          {% for step in step_masak %}
+          <div class="menu-row">
+            <!-- <span class="dish-name"></span> -->
+            <!-- <span class="dish-price">{{ loop.index }}</span> -->
+
+            <div class="time-slot-label">{{ step }}</div>
+          </div>
+          {% endfor %}
+          {% else %}
+          <div class="menu-row"><span class="dish-name">-</span><span class="dish-price">Belum ada langkah</span></div>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> by Fitria Melliyanni. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById( "year" ).textContent = new Date().getFullYear();
+  </script>
+</body>
+
+</html>

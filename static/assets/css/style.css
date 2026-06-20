@@ -1066,7 +1066,8 @@ a {
 .booking-field select,
 .booking-field input[type="date"],
 .booking-field input[type="time"],
-.booking-field input[type="text"] {
+.booking-field input[type="text"],
+.booking-field input[type="textarea"] {
     font-family: var(--font-body);
     font-size: 15px;
     padding: 10px 4px;

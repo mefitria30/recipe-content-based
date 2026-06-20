@@ -96,6 +96,9 @@ async function cariResep ()
                             <div class="menu-row"><span class="dish-name">Kategori</span><span class="dish-price">${ kategori }</span></div>
                             <div class="menu-row"><span class="dish-name">Waktu</span><span class="dish-price">${ item.waktu ? item.waktu + " menit" : "-" }</span></div>
                             <div class="menu-row"><span class="dish-name">Similarity</span><span class="dish-price">${ item.skor }</span></div>
+                            <div class="small-text">
+                                <a href="/detail/${ item.id_resep }"><b>EXPLORE RECIPE</b></a>
+                            </div>
                         </div>
                     `;
                 } );
@@ -190,6 +193,9 @@ async function cariResep ()
                         <div class="menu-row"><span class="dish-name">Kategori</span><span class="dish-price">${ kategori }</span></div>
                         <div class="menu-row"><span class="dish-name">Waktu</span><span class="dish-price">${ item.waktu ? item.waktu + " menit" : "-" }</span></div>
                         <div class="menu-row"><span class="dish-name">Similarity</span><span class="dish-price">${ item.skor.toFixed( 3 ) }</span></div>
+                        <div class="small-text">
+                            <a href="/detail/${ item.id_resep }"><b>EXPLORE RECIPE</b></a>
+                        </div>
                     </div>
         
                 `;
