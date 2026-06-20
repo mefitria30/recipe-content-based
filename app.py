@@ -64,9 +64,11 @@ def rekomendasi_resep_embed(nama_resep, top_n=12, cat_boost=0.1, threshold=0.5):
     sim_scores = cosine_similarity(resep_vec, X_resep).flatten()
 
     # kategori boost
-    query_cat = set(eval(df_clean.iloc[idx]['kategori_norm'])) if isinstance(df_clean.iloc[idx]['kategori_norm'], str) else set(df_clean.iloc[idx]['kategori_norm'])
+    query_cat = set(ast.literal_eval(df_clean.iloc[idx]['kategori_norm'])) \
+        if isinstance(df_clean.iloc[idx]['kategori_norm'], str) else set(df_clean.iloc[idx]['kategori_norm'])
     for i in range(len(df_clean)):
-        cat_i = set(eval(df_clean.iloc[i]['kategori_norm'])) if isinstance(df_clean.iloc[i]['kategori_norm'], str) else set(df_clean.iloc[i]['kategori_norm'])
+        cat_i = set(ast.literal_eval(df_clean.iloc[i]['kategori_norm'])) \
+            if isinstance(df_clean.iloc[i]['kategori_norm'], str) else set(df_clean.iloc[i]['kategori_norm'])
         if query_cat & cat_i:
             sim_scores[i] += cat_boost
 
@@ -75,7 +77,10 @@ def rekomendasi_resep_embed(nama_resep, top_n=12, cat_boost=0.1, threshold=0.5):
         s1, s2 = set(list1), set(list2)
         return len(s1 & s2) / len(s1 | s2) if s1 | s2 else 0
     jaccard_scores = np.array([
-        jaccard(eval(df_clean.iloc[idx]['list_bahan_norm']), eval(df_clean.iloc[i]['list_bahan_norm']))
+        jaccard(
+            ast.literal_eval(df_clean.iloc[idx]['list_bahan_norm']),
+            ast.literal_eval(df_clean.iloc[i]['list_bahan_norm'])
+        )
         for i in range(len(df_clean))
     ])
     sim_scores += 0.2 * jaccard_scores
