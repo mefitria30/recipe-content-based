@@ -168,7 +168,7 @@ a {
     min-height: clamp(480px, 78vh, 780px);
     background:
         linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)),
-        url('../images/hero.webp') center/cover no-repeat;
+        url('../images/gallery-16.jpg') center/cover no-repeat;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
