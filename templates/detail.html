@@ -88,6 +88,9 @@
     <p>&copy; <span id="year"></span> by Fitria Melliyanni. All rights reserved.</p>
   </footer>
 
+  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/script.js') }}"></script>
+
   <script>
     document.getElementById( "year" ).textContent = new Date().getFullYear();
   </script>
