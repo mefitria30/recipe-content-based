@@ -3,6 +3,7 @@ const urlsToCache = [
     "/",
     "/index.html",
     "/about.html",
+    "/detail.html",
     "/offline.html",
     "/static/resep_dataset_clean.json",
     "/static/resep_embeddings.json",
@@ -11,6 +12,7 @@ const urlsToCache = [
     "/static/icons/icon-512.png",
     "/static/assets/css/style.css",
     "/static/assets/images/gallery-16.jpg",
+    "/static/assets/images/hero.webp",
     "/static/assets/js/booktable.js",
     "/static/assets/js/main.js",
     "/static/assets/js/script.js"
