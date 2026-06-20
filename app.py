@@ -80,8 +80,8 @@ def rekomendasi_resep_embed(nama_resep, top_n=12, cat_boost=0.1, threshold=0.5):
     ])
     sim_scores += 0.2 * jaccard_scores
 
-    # filter skor >= threshold
-    valid_idx = [i for i in sim_scores.argsort()[::-1] if i != idx and sim_scores[i] >= threshold]
+    # ambil semua index dengan skor >= threshold (query juga ikut)
+    valid_idx = [i for i in sim_scores.argsort()[::-1] if sim_scores[i] >= threshold]
     valid_idx = valid_idx[:top_n]
 
     results = []
@@ -90,9 +90,11 @@ def rekomendasi_resep_embed(nama_resep, top_n=12, cat_boost=0.1, threshold=0.5):
             "judul": str(df_clean.iloc[i]['nama_resep']),
             "kategori": eval(df_clean.iloc[i]['kategori_norm']) if isinstance(df_clean.iloc[i]['kategori_norm'], str) else df_clean.iloc[i]['kategori_norm'],
             "waktu": int(df_clean.iloc[i]['waktu_norm']) if pd.notnull(df_clean.iloc[i]['waktu_norm']) else None,
-            "skor": round(float(sim_scores[i]), 3)
+            "skor": round(float(sim_scores[i]), 3),
+            "is_query": (i == idx)   # tandai apakah ini resep yang dicari
         })
     return results
+
 
 # === Endpoint rekomendasi ===
 @app.route("/recommend", methods=["GET"])

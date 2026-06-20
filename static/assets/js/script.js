@@ -84,13 +84,14 @@ async function cariResep ()
                 data.forEach( item =>
                 {
                     const kategori = Array.isArray( item.kategori ) ? item.kategori.join( ", " ) : item.kategori;
+                    const queryTag = item.is_query ? " [QUERY]" : "";  // tandai resep yang dicari
                     hasilDiv.innerHTML += `
-            <div class="menu-category">
-              <h3>${ item.judul }</h3>
-              <div class="menu-row"><span class="dish-name">Kategori</span><span class="dish-price">${ kategori }</span></div>
-              <div class="menu-row"><span class="dish-name">Waktu</span><span class="dish-price">${ item.waktu ? item.waktu + " menit" : "-" }</span></div>
-              <div class="menu-row"><span class="dish-name">Similarity</span><span class="dish-price">${ item.skor }</span></div>
-            </div>`;
+                        <div class="menu-category">
+                        <h3>${ item.judul }</h3>
+                        <div class="menu-row"><span class="dish-name">Kategori</span><span class="dish-price">${ kategori }</span></div>
+                        <div class="menu-row"><span class="dish-name">Waktu</span><span class="dish-price">${ item.waktu ? item.waktu + " menit" : "-" }</span></div>
+                        <div class="menu-row"><span class="dish-name">Similarity</span><span class="dish-price">${ item.skor }</span></div>
+                        </div>`;
                 } );
             } )
             .catch( err =>
