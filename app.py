@@ -97,7 +97,7 @@ def rekomendasi_resep_embed(nama_resep, top_n=12, cat_boost=0.1, threshold=0.5):
             "kategori": eval(df_clean.iloc[i]['kategori_norm']) if isinstance(df_clean.iloc[i]['kategori_norm'], str) else df_clean.iloc[i]['kategori_norm'],
             "waktu": int(df_clean.iloc[i]['waktu_norm']) if pd.notnull(df_clean.iloc[i]['waktu_norm']) else None,
             "skor": round(float(sim_scores[i]), 3),
-            "is_query": (i == idx)   # tandai apakah ini resep yang dicari
+            "is_query": 1 if i == idx else 0   # tandai apakah ini resep yang dicari
         })
     return results
 
