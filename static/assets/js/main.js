@@ -1,5 +1,5 @@
 /* ============================================
-   SPICE HAVEN — Main JavaScript
+   Recipe App — Main JavaScript
    Handles: Nav toggle, hero margin, scroll shadow
    ============================================ */
 
